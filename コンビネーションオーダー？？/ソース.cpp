@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
+#include <numeric>
 
 template<class UInt>
 std::vector<UInt> PrimeFacterlizer(UInt N) {
@@ -53,6 +54,30 @@ UInt Combination(UInt N, UInt r,UInt DenomiLimit) {
 		X *= (N - i);
 		Y *= (r - i);
 
+		UInt Z = 1;
+
+		if (X > DenomiLimit) {
+			do {
+				X /= Z;
+				Y /= Z;
+			
+			} while ((Z = std::gcd(X, Y)) != 1);
+			
+		}
+	}
+
+	return X / Y;
+}
+/** /
+template<class UInt>
+UInt Combination(UInt N, UInt r,UInt DenomiLimit) {
+
+	UInt X = 1;
+	UInt Y = 1;
+	for (UInt i = 0; i <r; i++) {
+		X *= (N - i);
+		Y *= (r - i);
+
 		if (X > DenomiLimit) {
 			auto Z = Denomi(X, Y);
 			X = Z.first;
@@ -62,7 +87,7 @@ UInt Combination(UInt N, UInt r,UInt DenomiLimit) {
 
 	return X / Y;
 }
-
+/**/
 int main() {
 	std::uintmax_t N = 58;
 	std::uintmax_t r = 30;
